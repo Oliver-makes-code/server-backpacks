@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package olivermakesco.de.servback;
 
 import net.fabricmc.api.ModInitializer;
 

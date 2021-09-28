@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "serverbackpacks",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Server Backpacks",
+  "description": "Backpacks for your server!",
   "authors": [
-    "Me!"
+    "Oliver-makes-code"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "http://olivermakesco.de",
+    "sources": "http://olivermakesco.de/git/server-backpacks"
   },
 
   "license": "CC0-1.0",

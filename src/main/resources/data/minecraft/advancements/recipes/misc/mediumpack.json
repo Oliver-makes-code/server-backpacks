@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "gainMedPack": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "serverbackpacks:small"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "mediumpack"
+    ]
+  },
+  "requirements": [
+    [
+      "gainMedPack"
+    ]
+  ]
+}

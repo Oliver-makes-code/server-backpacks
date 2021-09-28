@@ -30,14 +30,15 @@ public class BackpackGui extends SimpleGui {
         this.stack = stack;
         setTitle(stack.getName());
         NbtCompound nbt = stack.getOrCreateSubNbt("inventory");
-        DefaultedList<ItemStack> list = DefaultedList.ofSize(slots, ItemStack.EMPTY);
+        DefaultedList<ItemStack> list = DefaultedList.ofSize(slots+1, ItemStack.EMPTY);
+        list.set(slots,stack);
         Inventories.readNbt(nbt,list);
         inventory = new SimpleInventory(list.toArray(ItemStack[]::new));
         fillChest();
         for (int i = 0; i < 9; i++) {
             ItemStack invStack = player.getInventory().getStack(i);
-            if (invStack == stack) {
-                System.out.println(i);
+            if (invStack.equals(stack)) {
+                screenHandler.setSlot(slots+27+i, new NopSlot(inventory,slots,slots,0));
             }
         }
     }

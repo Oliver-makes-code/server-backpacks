@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "gainLargePack": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "serverbackpacks:medium"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "largepack"
+    ]
+  },
+  "requirements": [
+    [
+      "gainLargePack"
+    ]
+  ]
+}

@@ -7,48 +7,48 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.Nullable;
 
 public class BackpackItem extends Item implements VirtualItem {
     int slots;
+    String name;
 
     public BackpackItem(Settings settings, int slots) {
         super(settings.maxCount(1));
         this.slots = slots;
+        if (slots == 9)
+            name = "Small";
+        if (slots == 18)
+            name = "Medium";
+        if (slots == 27)
+            name = "Large";
     }
 
     @Override
-    public ItemStack getDefaultStack() {
-        ItemStack stack = new ItemStack(this);
-
-        return stack;
-    }
-
-    public NbtCompound generateDefaultInventory() {
-        NbtCompound nbt = new NbtCompound();
-        nbt.putInt("color", 0);
-        DefaultedList<ItemStack> list = DefaultedList.ofSize(slots, ItemStack.EMPTY);
-        nbt.put("inventory", Inventories.writeNbt(new NbtCompound(), list));
-        return nbt;
+    public Text getName(ItemStack stack) {
+        return Text.of(name + " Backpack");
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        if (user.isSneaking()) return TypedActionResult.pass(stack);
-        if (user instanceof ServerPlayerEntity player) {
-            BackpackGui gui = new BackpackGui(player, slots, stack);
-            gui.open();
-        }
-        return TypedActionResult.success(stack);
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (!(context.getPlayer() instanceof ServerPlayerEntity)) return ActionResult.PASS;
+        ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
+        if (player == null) return ActionResult.PASS;
+        if (player.isSneaking()) return ActionResult.PASS;
+        new BackpackGui(player,slots,context.getStack());
+        return ActionResult.PASS;
     }
 
     @Override

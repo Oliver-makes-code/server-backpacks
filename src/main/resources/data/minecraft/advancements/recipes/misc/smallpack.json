@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "gainSmallPack": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:chest"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "smallpack"
+    ]
+  },
+  "requirements": [
+    [
+      "gainSmallPack"
+    ]
+  ]
+}

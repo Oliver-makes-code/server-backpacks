@@ -11,14 +11,14 @@
       "item": "minecraft:string"
     },
     {
-      "item": "minecraft:chest"
+      "item": "minecraft:ender_chest"
     },
     {
-      "item": "minecraft:leather"
+      "item": "minecraft:diamond"
     }
   ],
   "result": {
-    "item": "serverbackpacks:small",
+    "item": "serverbackpacks:ender",
     "count": 1
   }
 }

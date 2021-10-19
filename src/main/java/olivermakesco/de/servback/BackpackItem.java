@@ -1,6 +1,11 @@
 package olivermakesco.de.servback;
 
 import eu.pb4.polymer.item.VirtualItem;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -10,16 +15,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BackpackItem extends Item implements VirtualItem {
     int slots;
@@ -42,10 +55,19 @@ public class BackpackItem extends Item implements VirtualItem {
     }
 
     @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+        var cast = user.raycast(5,0,false);
+        if (cast.getType() == HitResult.Type.BLOCK) return TypedActionResult.pass(stack);
+        if (!(user instanceof ServerPlayerEntity player)) return TypedActionResult.pass(stack);
+        if (player.isSneaking()) return TypedActionResult.pass(stack);
+        new BackpackGui(player,slots,stack);
+        return TypedActionResult.success(stack);
+    }
+
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        if (!(context.getPlayer() instanceof ServerPlayerEntity)) return ActionResult.PASS;
-        ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
-        if (player == null) return ActionResult.PASS;
+        if (!(context.getPlayer() instanceof ServerPlayerEntity player)) return ActionResult.PASS;
         if (player.isSneaking()) return ActionResult.PASS;
         new BackpackGui(player,slots,context.getStack());
         return ActionResult.PASS;
@@ -63,6 +85,11 @@ public class BackpackItem extends Item implements VirtualItem {
 
     @Override
     public ItemStack getVirtualItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        return getVirtualItem().getDefaultStack().setCustomName(itemStack.getName());
+        NbtCompound nbt = itemStack.getOrCreateNbt().copy();
+        ItemStack stack = getVirtualItem(itemStack,player).getDefaultStack();
+        nbt.putInt("backpack",slots/9);
+        stack.setNbt(nbt);
+        stack.setCustomName(itemStack.getName());
+        return stack;
     }
 }

@@ -1,11 +1,11 @@
 {
   "criteria": {
-    "gainMedPack": {
+    "gainSmallPack": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "serverbackpacks:small"
+            "item": "minecraft:chest"
           }
         ]
       }
@@ -13,12 +13,16 @@
   },
   "rewards": {
     "recipes": [
-      "mediumpack"
+      "smallpack",
+      "mediumpack",
+      "largepack",
+      "enderpack",
+      "globalpack"
     ]
   },
   "requirements": [
     [
-      "gainMedPack"
+      "gainSmallPack"
     ]
   ]
 }

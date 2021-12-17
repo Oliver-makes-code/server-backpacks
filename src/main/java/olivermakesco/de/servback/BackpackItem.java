@@ -75,7 +75,7 @@ public class BackpackItem extends Item implements VirtualItem {
 
     @Override
     public Item getVirtualItem() {
-        return Items.CHEST;
+        return Items.BUNDLE;
     }
 
     @Override

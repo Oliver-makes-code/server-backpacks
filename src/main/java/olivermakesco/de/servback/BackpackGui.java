@@ -35,7 +35,7 @@ public class BackpackGui extends SimpleGui {
         this.slots = slots;
         this.stack = stack;
         setTitle(stack.getName());
-        NbtCompound nbt = stack.getOrCreateSubNbt("inventory");
+        NbtCompound nbt = stack.getOrCreateNbt();
         DefaultedList<ItemStack> list = DefaultedList.ofSize(slots+1, ItemStack.EMPTY);
         list.set(slots,stack);
         Inventories.readNbt(nbt,list);
@@ -69,10 +69,9 @@ public class BackpackGui extends SimpleGui {
             ItemStack stack = getSlotRedirect(i).getStack();
             inv.set(i,stack);
         }
-        NbtCompound invNbt = Inventories.writeNbt(new NbtCompound(), inv);
         NbtCompound root = stack.getNbt();
-        root.put("inventory", invNbt);
-        stack.setNbt(root);
+        NbtCompound invNbt = Inventories.writeNbt(root, inv);
+        stack.setNbt(invNbt);
     }
 
     @Override

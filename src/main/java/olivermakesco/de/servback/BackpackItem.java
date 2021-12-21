@@ -86,7 +86,7 @@ public class BackpackItem extends Item implements VirtualItem {
     @Override
     public ItemStack getVirtualItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         NbtCompound nbt = itemStack.getOrCreateNbt().copy();
-        ItemStack stack = getVirtualItem(itemStack,player).getDefaultStack();
+        ItemStack stack = VirtualItem.super.getVirtualItemStack(itemStack, player);
         nbt.putInt("backpack",slots/9);
         stack.setNbt(nbt);
         stack.setCustomName(itemStack.getName());

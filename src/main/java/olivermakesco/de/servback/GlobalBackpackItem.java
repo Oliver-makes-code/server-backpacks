@@ -46,7 +46,7 @@ public class GlobalBackpackItem extends Item implements VirtualItem {
 
     @Override
     public ItemStack getVirtualItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        ItemStack stack = getVirtualItem().getDefaultStack();
+        ItemStack stack = VirtualItem.super.getVirtualItemStack(itemStack, player);
         stack.setCustomName(Text.of("Global Backpack"));
         return stack;
     }

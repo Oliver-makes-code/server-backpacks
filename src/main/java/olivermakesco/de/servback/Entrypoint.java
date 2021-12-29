@@ -50,7 +50,10 @@ public class Entrypoint implements ModInitializer {
 			DefaultedList<ItemStack> inv = DefaultedList.ofSize(27,ItemStack.EMPTY);
 			Inventories.readNbt(nbt,inv);
 			globalInventory = inv.toArray(ItemStack[]::new);
-		} catch (Exception ignored) {}
+		} catch (Exception ignored) {
+			DefaultedList<ItemStack> inv = DefaultedList.ofSize(27,ItemStack.EMPTY);
+			globalInventory = inv.toArray(ItemStack[]::new);
+		}
 	}
 	public static void saveGlobal() {
 		try {

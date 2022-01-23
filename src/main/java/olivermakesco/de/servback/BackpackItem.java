@@ -16,9 +16,6 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class BackpackItem extends Item implements VirtualItem {
     int slots;
     String name;

@@ -18,4 +18,8 @@ public class NopSlot extends Slot {
     public boolean canTakeItems(PlayerEntity playerEntity) {
         return false;
     }
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

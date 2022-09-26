@@ -1,6 +1,7 @@
 package olivermakesco.de.servback;
 
-import eu.pb4.polymer.item.VirtualItem;
+import eu.pb4.polymer.api.item.PolymerItem;
+import eu.pb4.polymer.api.item.PolymerItemUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class BackpackItem extends Item implements VirtualItem {
+public class BackpackItem extends Item implements PolymerItem {
     int slots;
     String name;
 
@@ -55,19 +56,16 @@ public class BackpackItem extends Item implements VirtualItem {
         return ActionResult.PASS;
     }
 
+    public Item getPolymerItem() {return Items.BUNDLE;}
     @Override
-    public Item getVirtualItem() {
-        return Items.BUNDLE;
+
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
+        return getPolymerItem();
     }
 
     @Override
-    public Item getVirtualItem(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        return getVirtualItem();
-    }
-
-    @Override
-    public ItemStack getVirtualItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        ItemStack stack = VirtualItem.super.getVirtualItemStack(itemStack, player);
+    public ItemStack getPolymerItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
+        ItemStack stack = PolymerItemUtils.createItemStack(itemStack, player);
         NbtCompound nbt = stack.getOrCreateNbt().copy();
         nbt.putInt("backpack",slots/9);
         stack.setNbt(nbt);

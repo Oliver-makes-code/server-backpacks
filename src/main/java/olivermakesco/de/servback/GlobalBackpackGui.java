@@ -5,12 +5,12 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 public class GlobalBackpackGui extends SimpleGui {
     public GlobalBackpackGui(ServerPlayerEntity player) {
         super(ScreenHandlerType.GENERIC_9X3, player, false);
-        setTitle(new TranslatableText("Global Backpack"));
+        setTitle(Text.of("Global Backpack"));
         fillChest();
         open();
     }

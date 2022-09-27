@@ -51,7 +51,7 @@ public class EnderBackpackItem extends Item implements PolymerItem {
     @Override
     public ItemStack getPolymerItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         ItemStack stack = PolymerItemUtils.createItemStack(itemStack, player);
-        stack.setCustomName(Text.of("Uwu"));
+        stack.setCustomName(Text.of("Ender Backpack"));
         return stack;
     }
 }

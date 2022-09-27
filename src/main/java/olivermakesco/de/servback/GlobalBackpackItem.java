@@ -33,6 +33,11 @@ public class GlobalBackpackItem extends Item implements PolymerItem {
     }
 
     @Override
+    public Text getName(ItemStack stack) {
+        return Text.of("Global Backpack");
+    }
+
+    @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (!(context.getPlayer() instanceof ServerPlayerEntity player)) return ActionResult.PASS;
         if (player.isSneaking()) return ActionResult.PASS;

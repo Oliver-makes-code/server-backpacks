@@ -31,6 +31,10 @@ public class EnderBackpackItem extends Item implements PolymerItem {
         new EnderBackpackGui(player);
         return TypedActionResult.success(stack);
     }
+    @Override
+    public Text getName(ItemStack stack) {
+        return Text.of("Ender Backpack");
+    }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {

@@ -1,5 +1,6 @@
 package olivermakesco.de.servback;
 
+import eu.pb4.polymer.api.item.PolymerItemGroup;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -7,10 +8,13 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.collection.DefaultedList;
@@ -21,16 +25,20 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 public class Entrypoint implements ModInitializer {
+
+	Identifier IDENTIFIER = new Identifier("serverbackpack");
+	ItemGroup SERVERBACKPACK_GROUP = PolymerItemGroup.create(IDENTIFIER, Text.of("Server Backpack")).setIcon(new ItemStack(Items.BUNDLE));
+
 	@Override
 	public void onInitialize() {
 		for (String s : backpacks.keySet()) {
 			int i = backpacks.get(s);
 			Identifier id = new Identifier("serverbackpacks",s);
-			Item item = new BackpackItem(new FabricItemSettings(), i);
+			Item item = new BackpackItem(new FabricItemSettings().group(SERVERBACKPACK_GROUP), i);
 			Registry.register(Registry.ITEM,id,item);
 		}
-		Registry.register(Registry.ITEM,new Identifier("serverbackpacks","ender"), new EnderBackpackItem(new FabricItemSettings()));
-		Registry.register(Registry.ITEM,new Identifier("serverbackpacks","global"), new GlobalBackpackItem(new FabricItemSettings()));
+		Registry.register(Registry.ITEM,new Identifier("serverbackpacks","ender"), new EnderBackpackItem(new FabricItemSettings().group(SERVERBACKPACK_GROUP)));
+		Registry.register(Registry.ITEM,new Identifier("serverbackpacks","global"), new GlobalBackpackItem(new FabricItemSettings().group(SERVERBACKPACK_GROUP)));
 
 		ServerLifecycleEvents.SERVER_STARTING.register((s) -> {
 			server = s;

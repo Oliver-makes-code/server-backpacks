@@ -1,0 +1,9 @@
+{
+  "item.serverbackpacks.ender": "Sac à dos de l'Ender",
+  "item.serverbackpacks.small": "Petit sac à dos",
+  "item.serverbackpacks.medium" : "Moyen sac à dos",
+  "item.serverbackpacks.large" : "Grand sac à dos",
+  "item.serverbackpacks.global" : "Sac à dos Global",
+  "itemGroup.serverbackpacks.SERVERBACKPACK_GROUP" : "Sac à dos pour serveur",
+  "itemGroup.serverbackpacks.serverbackpack_group" : "Sac à dos pour serveur"
+}

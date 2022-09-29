@@ -28,25 +28,26 @@ public class EnderBackpackItem extends Item implements PolymerItem {
         if (cast.getType() == HitResult.Type.BLOCK) return TypedActionResult.pass(stack);
         if (!(user instanceof ServerPlayerEntity player)) return TypedActionResult.pass(stack);
         if (player.isSneaking()) return TypedActionResult.pass(stack);
-        new EnderBackpackGui(player);
+        new EnderBackpackGui(player,stack);
         return TypedActionResult.success(stack);
-    }
-    @Override
-    public Text getName(ItemStack stack) {
-        return Text.of("Ender Backpack");
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (!(context.getPlayer() instanceof ServerPlayerEntity player)) return ActionResult.PASS;
         if (player.isSneaking()) return ActionResult.PASS;
-        new EnderBackpackGui(player);
+        new EnderBackpackGui(player,context.getStack());
         return ActionResult.PASS;
     }
 
     public Item getPolymerItem() {
         return Items.ENDER_CHEST;
     }
+
+    public Text getName(ItemStack stack) {
+        return Text.translatable("item.serverbackpacks.ender");
+    }
+
     @Override
     public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         return getPolymerItem();
@@ -55,7 +56,6 @@ public class EnderBackpackItem extends Item implements PolymerItem {
     @Override
     public ItemStack getPolymerItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         ItemStack stack = PolymerItemUtils.createItemStack(itemStack, player);
-        stack.setCustomName(Text.of("Ender Backpack"));
         return stack;
     }
 }

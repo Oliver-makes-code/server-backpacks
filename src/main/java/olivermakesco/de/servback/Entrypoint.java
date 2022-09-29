@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class Entrypoint implements ModInitializer {
 
 	Identifier IDENTIFIER = new Identifier("serverbackpack");
-	ItemGroup SERVERBACKPACK_GROUP = PolymerItemGroup.create(IDENTIFIER, Text.of("Server Backpack")).setIcon(new ItemStack(Items.BUNDLE));
+	ItemGroup SERVERBACKPACK_GROUP = PolymerItemGroup.create(IDENTIFIER, Text.translatable("itemGroup.serverbackpacks.SERVERBACKPACK_GROUP")).setIcon(new ItemStack(Items.BUNDLE));
 
 	@Override
 	public void onInitialize() {

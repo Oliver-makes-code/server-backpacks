@@ -25,16 +25,17 @@ public class BackpackItem extends Item implements PolymerItem {
         super(settings.maxCount(1));
         this.slots = slots;
         if (slots == 9)
-            name = "Small";
+            name ="item.serverbackpacks.small";
         if (slots == 18)
-            name = "Medium";
+            name = "item.serverbackpacks.medium";
         if (slots == 27)
-            name = "Large";
+            name = "item.serverbackpacks.large";
     }
+
 
     @Override
     public Text getName(ItemStack stack) {
-        return Text.of(name + " Backpack");
+        return Text.translatable(name);
     }
 
     @Override
@@ -63,13 +64,14 @@ public class BackpackItem extends Item implements PolymerItem {
         return getPolymerItem();
     }
 
+
+
     @Override
     public ItemStack getPolymerItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         ItemStack stack = PolymerItemUtils.createItemStack(itemStack, player);
         NbtCompound nbt = stack.getOrCreateNbt().copy();
         nbt.putInt("backpack",slots/9);
         stack.setNbt(nbt);
-        stack.setCustomName(itemStack.getName());
         return stack;
     }
 }

@@ -28,20 +28,20 @@ public class GlobalBackpackItem extends Item implements PolymerItem {
         if (cast.getType() == HitResult.Type.BLOCK) return TypedActionResult.pass(stack);
         if (!(user instanceof ServerPlayerEntity player)) return TypedActionResult.pass(stack);
         if (player.isSneaking()) return TypedActionResult.pass(stack);
-        new GlobalBackpackGui(player);
+        new GlobalBackpackGui(player,stack);
         return TypedActionResult.success(stack);
     }
 
     @Override
     public Text getName(ItemStack stack) {
-        return Text.of("Global Backpack");
+        return Text.translatable("item.serverbackpacks.global");
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (!(context.getPlayer() instanceof ServerPlayerEntity player)) return ActionResult.PASS;
         if (player.isSneaking()) return ActionResult.PASS;
-        new GlobalBackpackGui(player);
+        new GlobalBackpackGui(player,context.getStack() );
         return ActionResult.PASS;
     }
 
@@ -55,7 +55,6 @@ public class GlobalBackpackItem extends Item implements PolymerItem {
     @Override
     public ItemStack getPolymerItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         ItemStack stack = PolymerItemUtils.createItemStack(itemStack, player);
-        stack.setCustomName(Text.of("Global Backpack"));
         return stack;
     }
 }

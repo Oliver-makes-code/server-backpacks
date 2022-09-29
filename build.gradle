@@ -32,6 +32,7 @@ dependencies {
 	// You may need to force-disable transitiveness on them.
 	modImplementation include("eu.pb4:polymer:${project.polymer_version}")
 	modImplementation include("eu.pb4:sgui:${project.sgui_version}")
+	modImplementation include("fr.catcore:server-translations-api:${project.translation_version}")
 }
 
 processResources {

@@ -1,6 +1,7 @@
 package olivermakesco.de.servback;
 
-import eu.pb4.polymer.item.VirtualItem;
+import eu.pb4.polymer.api.item.PolymerItem;
+import eu.pb4.polymer.api.item.PolymerItemUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,7 +16,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class GlobalBackpackItem extends Item implements VirtualItem {
+public class GlobalBackpackItem extends Item implements PolymerItem {
     public GlobalBackpackItem(Item.Settings settings) {
         super(settings.maxCount(1));
     }
@@ -27,27 +28,33 @@ public class GlobalBackpackItem extends Item implements VirtualItem {
         if (cast.getType() == HitResult.Type.BLOCK) return TypedActionResult.pass(stack);
         if (!(user instanceof ServerPlayerEntity player)) return TypedActionResult.pass(stack);
         if (player.isSneaking()) return TypedActionResult.pass(stack);
-        new GlobalBackpackGui(player);
+        new GlobalBackpackGui(player,stack);
         return TypedActionResult.success(stack);
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        return Text.translatable("item.serverbackpacks.global");
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (!(context.getPlayer() instanceof ServerPlayerEntity player)) return ActionResult.PASS;
         if (player.isSneaking()) return ActionResult.PASS;
-        new GlobalBackpackGui(player);
+        new GlobalBackpackGui(player,context.getStack() );
         return ActionResult.PASS;
     }
 
+
+    public Item getPolymerItem() {return Items.CRAFTING_TABLE;}
     @Override
-    public Item getVirtualItem() {
-        return Items.CRAFTING_TABLE;
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
+        return getPolymerItem();
     }
 
     @Override
-    public ItemStack getVirtualItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        ItemStack stack = VirtualItem.super.getVirtualItemStack(itemStack, player);
-        stack.setCustomName(Text.of("Global Backpack"));
+    public ItemStack getPolymerItemStack(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
+        ItemStack stack = PolymerItemUtils.createItemStack(itemStack, player);
         return stack;
     }
 }
